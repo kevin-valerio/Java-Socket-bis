@@ -17,34 +17,26 @@ public class ClientServeurInconnu {
 
         try {
 
-             Socket client = new Socket(serveurSmtp, port);
+            Socket client = new Socket(serveurSmtp, port);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+            InputStream in = client.getInputStream();
 
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                    client.getOutputStream()));
-
-            FileWriter fw = null;
-            BufferedWriter bw = null;
-
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(client
-                    .getInputStream()));
 
             out.flush();
-            out.write("image1.jpeg\n");
+            out.write("image1.jpeg");
+            out.newLine();
             out.flush();
 
-            for(int i = 0; i < in.read(); ++i){
-               file.append(in.readLine());
-             }
+            byte arr[]  = new byte[900];
+            FileOutputStream fos = new FileOutputStream("image1.jpeg");
 
-            System.out.print(file.toString());
+            int nbOctets;
+            while ((nbOctets = in.read(arr)) != -1) {
+                fos.write(arr, 0, nbOctets);
+            }
 
-            fw = new FileWriter("a.jpeg");
-            bw = new BufferedWriter(fw);
-            bw.write(file.toString());
-
-            out.close();
-            client.close();
+           out.close();
+           client.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,8 +48,5 @@ public class ClientServeurInconnu {
     public static void main(String[] args) {
         ClientServeurInconnu client = new ClientServeurInconnu("10.203.9.145", 2000);
         client.download();
-
-
     }
-
 }
