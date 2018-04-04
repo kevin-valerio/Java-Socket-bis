@@ -18,7 +18,7 @@ public class ClientPop3 {
 
     }
 
-    private boolean send(String from, String to, String subject, String body) {
+    private void send() {
 
         try {
 
@@ -35,9 +35,6 @@ public class ClientPop3 {
             out.flush();
 
 
-            if (analyserReponseServeur(in) == false)
-                return false;
-
 
             out.close();
 
@@ -45,11 +42,8 @@ public class ClientPop3 {
 
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
+         }
+     }
 
     private boolean analyserReponseServeur(BufferedReader in) throws IOException {
 
@@ -76,8 +70,8 @@ public class ClientPop3 {
          ClientPop3 client = new ClientPop3("192.168.1.90", 25,
                 "127.0.0.1");
 
-        if (client.send("garfield", "jon",
-                "Coucou ", "Bonjour Jon \nJe veux des lasagnes !\n merci."))
+/*        if (client.send("garfield", "jon",
+                "Coucou ", "Bonjour Jon \nJe veux des lasagnes !\n merci.")) */
             System.out.println("Message envoye avec succes !");
 
     }
