@@ -1,15 +1,7 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Enumeration;
 
 public class ClientSmtp {
 
@@ -44,23 +36,23 @@ public class ClientSmtp {
             // On analyse les lignes envoyees par le serveur
             // En cas d'erreur, on quitte
 
-            if (analyserReponseServeur(in) == false)
+            if (!analyserReponseServeur(in))
                 return false;
 
             out.write("mail from:<" + from + ">");
             out.newLine();
             out.flush();
-            if (analyserReponseServeur(in) == false)
+            if (!analyserReponseServeur(in))
                 return false;
 
             out.write("rcpt to:<" + to + ">\n");
             out.flush();
-            if (analyserReponseServeur(in) == false)
+            if (!analyserReponseServeur(in))
                 return false;
 
             out.write("data\n");
             out.flush();
-            if (analyserReponseServeur(in) == false)
+            if (!analyserReponseServeur(in))
                 return false;
 
             out.write("from: " + from + "\n" );
@@ -70,12 +62,12 @@ public class ClientSmtp {
             out.write(".\n");
             out.flush();
 
-            if (analyserReponseServeur(in) == false)
+            if (!analyserReponseServeur(in))
                 return false;
 
             out.write("quit \n");
             out.flush();
-            if (analyserReponseServeur(in) == false)
+            if (!analyserReponseServeur(in))
                 return false;
 
             out.close();

@@ -9,6 +9,5 @@ public class MainBis {
                 (100,  50007);
         serveurTcpEcho.start();
 
-        //test
-    }
+     }
 }
